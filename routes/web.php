@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 // AUTH & NAVIGASI
 Route::get('/', 'App\Http\Controllers\lapfut@index');
-Route::get('/login', 'App\Http\Controllers\lapfut@formLogin');
+Route::get('/login', 'App\Http\Controllers\lapfut@formLogin');                                                                  
 Route::post('/login', 'App\Http\Controllers\lapfut@aksilogin');
 Route::get('/home', 'App\Http\Controllers\lapfut@home');
 Route::get('/logout', 'App\Http\Controllers\lapfut@logout');
