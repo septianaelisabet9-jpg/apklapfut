@@ -1,17 +1,48 @@
-<!DOCTYPE html>
-<html>
-<head><title>Data Users</title></head>
-<body>
+@extends('template')
+
+@section('content')
+<div class="container mt-4">
     <h2>Data Users</h2>
-    <a href="/home">Kembali ke Home</a> | <a href="/users/tambah-form"><strong>+ Tambah User</strong></a><br><br>
-    <table border="1" cellpadding="8">
-        <tr><th>ID</th><th>Jabatan</th><th>Nama</th><th>Email</th><th>No HP</th><th>Aksi</th></tr>
-        @foreach($data as $d)
-        <tr>
-            <td>{{ $d->id }}</td><td>{{ $d->nama_jabatan }}</td><td>{{ $d->nama }}</td><td>{{ $d->email }}</td><td>{{ $d->no_hp }}</td>
-            <td><a href="/users/hapus/{{ $d->id }}" onclick="return confirm('Hapus data?')">Hapus</a></td>
-        </tr>
-        @endforeach
-    </table>
-</body>
-</html>
+    <hr>
+
+    <!-- Tombol Navigasi & Aksi Atas -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="/home" class="btn btn-secondary">Kembali ke Home</a>
+        <a href="/users/tambah-form" class="btn btn-primary">+ Tambah User</a>
+    </div>
+
+    <!-- Tabel Data Users -->
+    <div class="card shadow-sm p-3">
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Jabatan</th>
+                        <th>Nama</th>
+                        <th>Email</th>
+                        <th>No HP</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($data as $d)
+                    <tr>
+                        <td>{{ $d->id }}</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ $d->nama_jabatan }}</span>
+                        </td>
+                        <td><strong>{{ $d->nama }}</strong></td>
+                        <td>{{ $d->email }}</td>
+                        <td>{{ $d->no_hp }}</td>
+                        <td>
+                            <a href="/users/hapus/{{ $d->id }}" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data?')">Hapus</a>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@endsection

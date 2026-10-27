@@ -1,26 +1,64 @@
-<!DOCTYPE html>
-<html>
-<head><title>Tambah Booking</title></head>
-<body>
+@extends('template')
+
+@section('content')
+<div class="container mt-4">
     <h2>Form Pemesanan (Booking) Lapangan</h2>
-    <a href="/bookings">Kembali</a><br><br>
-    <form action="/bookings/tambah" method="POST">
-        @csrf
-        <label>User / Pemesan:</label><br>
-        <select name="user_id" required>
-            @foreach($users as $u) <option value="{{ $u->id }}">{{ $u->nama }}</option> @endforeach
-        </select><br><br>
-        <label>Lapangan:</label><br>
-        <select name="field_id" required>
-            @foreach($fields as $f) <option value="{{ $f->id }}">{{ $f->nama_lapangan }}</option> @endforeach
-        </select><br><br>
-        <label>Tanggal Main:</label><br>
-        <input type="date" name="tgl_main" required><br><br>
-        <input type="text" name="jam_mulai" placeholder="19:00:00" required><br><br>
-        <input type="text" name="jam_selesai" placeholder="21:00:00" required><br><br>
-        <input type="number" name="durasi_jam" placeholder="Durasi (Jam)" required><br><br>
-        <input type="number" name="total_harga" placeholder="Total Harga" required><br><br>
-        <button type="submit">Simpan Booking</button>
-    </form>
-</body>
-</html>
+    <hr>
+    
+    <a href="/bookings" class="btn btn-secondary mb-3">Kembali</a>
+
+    <div class="card shadow-sm p-4">
+        <form action="/bookings/tambah" method="POST">
+            @csrf
+            
+            <div class="mb-3">
+                <label class="form-label">**User / Pemesan:**</label>
+                <select name="user_id" class="form-select" required>
+                    <option value="">-- Pilih Pemesan --</option>
+                    @foreach($users as $u) 
+                        <option value="{{ $u->id }}">{{ $u->nama }}</option> 
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">**Lapangan:**</label>
+                <select name="field_id" class="form-select" required>
+                    <option value="">-- Pilih Lapangan --</option>
+                    @foreach($fields as $f) 
+                        <option value="{{ $f->id }}">{{ $f->nama_lapangan }}</option> 
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">**Tanggal Main:**</label>
+                <input type="date" name="tgl_main" class="form-control" required>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">**Jam Mulai:**</label>
+                    <input type="text" name="jam_mulai" class="form-control" placeholder="19:00:00" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">**Jam Selesai:**</label>
+                    <input type="text" name="jam_selesai" class="form-control" placeholder="21:00:00" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">**Durasi (Jam):**</label>
+                <input type="number" name="durasi_jam" class="form-control" placeholder="Contoh: 2" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">**Total Harga (Rp):**</label>
+                <input type="number" name="total_harga" class="form-control" placeholder="Contoh: 150000" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Simpan Booking</button>
+        </form>
+    </div>
+</div>
+@endsection
