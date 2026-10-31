@@ -18,6 +18,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+                        <th>Foto</th>
                         <th>Jabatan</th>
                         <th>Nama</th>
                         <th>Email</th>
@@ -29,6 +30,13 @@
                     @foreach($data as $d)
                     <tr>
                         <td>{{ $d->id }}</td>
+                       <td>
+                            @if($d->foto)
+                  <img src="{{ asset('assets/img/' . $d->foto) }}" alt="Foto Profile" width="50" height="50" class="rounded-circle object-fit-cover">
+             @else
+              <span class="badge bg-secondary">Tidak ada</span>
+                 @endif
+</td>
                         <td>
                             <span class="badge bg-secondary">{{ $d->nama_jabatan }}</span>
                         </td>

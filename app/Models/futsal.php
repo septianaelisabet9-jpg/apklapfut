@@ -28,7 +28,11 @@ class futsal
             ->select('users.*', 'jabatans.nama_jabatan')
             ->get();
     }
-    public function insertUser($data) { return DB::table('users')->insert($data); }
+   public function insertUser($data)
+{
+    // Pastikan kolom 'foto' ikut dimasukkan ke database
+    return DB::table('users')->insert($data);
+}
     public function deleteUser($id) { return DB::table('users')->where('id', $id)->delete(); }
 
     public function getAllFields() { return DB::table('fields')->get(); }

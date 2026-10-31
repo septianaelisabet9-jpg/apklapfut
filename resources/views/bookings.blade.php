@@ -8,10 +8,14 @@
     <!-- Tombol Navigasi & Aksi Atas -->
     <div class="d-flex justify-content-between align-items-center mb-4">
         <a href="/home" class="btn btn-secondary">Kembali ke Home</a>
-        <a href="/bookings/export-excel" class="btn btn-success">Export Semua Data ke Excel</a>
+        <div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="/bookings/export-pdf-all" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="/bookings/export-excel" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
     </div>
 
-    <!-- Form Tambah Booking (Opsional jika ingin ditaruh langsung di halaman ini) -->
+    <!-- Form Tambah Booking -->
     <div class="card shadow-sm p-4 mb-4">
         <h5 class="mb-3">Tambah Booking Baru</h5>
         <form action="/bookings/tambah" method="POST">
@@ -29,10 +33,8 @@
                     <select name="field_id" class="form-select" required>
                         <option value="">-- Pilih Lapangan --</option>
                         @foreach($fields as $f) 
-                        <option value="{{ $f->id }}">{{ $f->nama_lapangan }}
-
-        
-                        </option> @endforeach
+                        <option value="{{ $f->id }}">{{ $f->nama_lapangan }}</option> 
+                        @endforeach
                     </select>
                 </div>
                 <div class="col-md-3 mb-3">
@@ -62,7 +64,7 @@
         </form>
     </div>
 
-   
+    <!-- Tabel Data Booking -->
     <div class="card shadow-sm p-3">
         <div class="table-responsive">
             <table class="table table-bordered table-striped align-middle">

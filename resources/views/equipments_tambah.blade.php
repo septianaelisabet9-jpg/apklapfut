@@ -21,6 +21,10 @@
                     <option value="Cone Latihan|5000">Cone Latihan - Rp 5.000 / jam</option>
                 </select>
             </div>
+             <button type="button" class="btn btn-secondary btn-sm" onclick="window.print()">Print Window</button>
+            <a href="/pelanggan/pdf" target="_blank" class="btn btn-danger btn-sm">Download PDF</a>
+            <a href="/pelanggan/excel" class="btn btn-success btn-sm">Export Excel</a>
+        </div>
 
             <!-- Input tersembunyi untuk dikirim ke controller -->
             <input type="hidden" name="nama_barang" id="namaBarang">

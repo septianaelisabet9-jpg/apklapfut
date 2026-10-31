@@ -23,20 +23,21 @@ class lapfut extends Controller
     return view('login');
     }
 
-    public function aksilogin(Request $request)
-    {
-        $user = $this->futsalModel->cekLogin($request->input('username'));
+   public function aksilogin(Request $request)
+{
+    $user = $this->futsalModel->cekLogin($request->input('username'));
 
-        if ($user && $user->password_hash == $request->input('password')) {
-            session([
-                'u'          => $user->nama, 
-                'id_user'    => $user->id,
-                'id_jabatan' => $user->id_jabatan
-            ]);
-            return redirect('/home');
-        }
-        return redirect('/')->with('error', 'Username/Email atau Password salah!');
+    // BAGIAN INI YANG PERLU DICEK:
+    if ($user && $user->password_hash == $request->input('password')) {
+        session([
+            'u'          => $user->nama, 
+            'id_user'    => $user->id,
+            'id_jabatan' => $user->id_jabatan
+        ]);
+        return redirect('/home');
     }
+    return redirect('/')->with('error', 'Username/Email atau Password salah!');
+}
 
     public function home() { return session('u') ? view('home') : redirect('/'); }
     public function logout() { session()->flush(); return redirect('/'); }
@@ -68,21 +69,40 @@ class lapfut extends Controller
     public function jabatansHapus($id) { $this->futsalModel->deleteJabatan($id); return redirect('/jabatans'); }
 
     // --- USERS ---
+   // --- USERS ---
     public function users()
     {
         $data = $this->futsalModel->getAllUsers();
         $jabatans = $this->futsalModel->getAllJabatan();
         return view('users', compact('data', 'jabatans'));
     }
-    public function usersTambah(Request $request)
-    {
-        $this->futsalModel->insertUser([
-            'id_jabatan' => $request->id_jabatan, 'nama' => $request->nama,
-            'email' => $request->email, 'no_hp' => $request->no_hp, 'password_hash' => $request->password
-        ]);
-        return redirect('/users');
+
+public function usersTambah(Request $request)
+{
+    $namaFile = null;
+
+    if ($request->hasFile('foto')) {
+        $file = $request->file('foto');
+        $namaFile = time() . '_' . $file->getClientOriginalName();
+        // Simpan ke storage/app/public/img
+        $file->storeAs('public/img', $namaFile);
     }
-    public function usersHapus($id) { $this->futsalModel->deleteUser($id); return redirect('/users'); }
+
+    $this->futsalModel->insertUser([
+        'id_jabatan'    => $request->id_jabatan, 
+        'nama'          => $request->nama,
+        'email'         => $request->email, 
+        'no_hp'         => $request->no_hp, 
+        'password_hash' => $request->password,
+        'foto'          => $namaFile 
+    ]);
+
+    return redirect('/users');
+}
+  public function usersHapus($id)
+    {  $this->futsalModel->deleteUser($id); 
+    return redirect('/users');
+     }
 
     // --- FIELDS ---
     public function fields()
